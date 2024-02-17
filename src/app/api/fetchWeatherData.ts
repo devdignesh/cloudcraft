@@ -14,7 +14,8 @@ const handleApiError = (error: AxiosError): void => {
 };
  
 export const fetchWeather = async (query: string): Promise<WeatherItems> => {
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`;
+  const apiKey = process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY || process.env.OPEN_WEATHER_API_KEY;
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=${apiKey}`;
 
   try {
     const response: AxiosResponse<WeatherItems> = await axios.get(apiUrl);

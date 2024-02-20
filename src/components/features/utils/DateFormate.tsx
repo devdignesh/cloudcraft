@@ -27,7 +27,7 @@ const DateFormate: React.FC = () => {
 
   return (
     <>
-      <p className="text-base font-semibold">{date}</p>
+      <p className="text-sm sm:text-base font-semibold">{date}</p>
     </>
   );
 };

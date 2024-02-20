@@ -21,7 +21,7 @@ export default function WeatherDetails() {
   const { loading, error, data } = useSelector(
     (state: RootState) => state.weather
   );
-
+ 
   return (
     <>
       <Card>
@@ -34,9 +34,9 @@ export default function WeatherDetails() {
         <CardContent>
           <p className="flex justify-center text-4xl font-bold"> {formatSunTime(data.sys.sunset,data.timezone)}</p>
         </CardContent>
-        <CardFooter className="flex flex-col items-start ">
+        <CardFooter className="flex flex-col items-start">
           <p>Sunrise</p>
-           {formatSunTime(data.sys.sunrise,data.timezone)}
+          <span>{formatSunTime(data.sys.sunrise,data.timezone)}</span>
         </CardFooter>
       </Card>
       <Card className="">

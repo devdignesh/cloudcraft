@@ -11,20 +11,20 @@ import {
 } from "@/components/ui/card";
 
 import { FaLocationArrow } from "react-icons/fa";
-import { FaSnowflake } from "react-icons/fa6";
-
 import { FaCloud } from "react-icons/fa6";
 import { FaTemperatureThreeQuarters } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";      
+import { RootState } from "@/redux/store";
 import TimeFormate from "./utils/TimeFormate";
-import DateFormate from "./utils/DateFormate";
+import DateFormate from "./utils/DateFormate"; 
 
 export default function Temprature() {
-  const {data } = useSelector(
-    (state: RootState) => state.weather
-  );
-
+  const { data } = useSelector((state: RootState) => state.weather);
+  
+  const { temp_max, temp_min } = data.main;
+  const maxTemperature = Math.round(temp_max);
+  const minTemperature = Math.round(temp_min);
+  
   return (
     <div>
       <Card>
@@ -46,16 +46,21 @@ export default function Temprature() {
           </div>
         </CardContent>
         <CardFooter className="flex justify-between items-end">
-          <div className="">
-            <DateFormate/>
-            <TimeFormate/>
+          <div>
+            <DateFormate />
+            <TimeFormate />
           </div>
           <div className="flex flex-col items-end">
-            <FaCloud className="w-8 h-8 "/>
-            <span className="text-base font-semibold">{data.weather[0].main}</span>
-            <div className="flex gap-3 text-base dark:text-neutral-500">
-              <span>High: {Math.round(data.main.temp_max)}°C</span>
-              <span>Low: {Math.round(data.main.temp_max)}°C</span>
+            <FaCloud className="w-8 h-8 " />
+            <span className=" font-semibold">{data.weather[0].main}</span>
+
+            <div className="hidden sm:block space-x-3 text-sm dark:text-neutral-500">
+              <span>High: {maxTemperature}°C</span>
+              <span>Low: {minTemperature}°C</span>
+            </div>
+            <div className="block sm:hidden text-sm dark:text-neutral-500">
+              <span>H: {maxTemperature}</span>
+              <span>L: {minTemperature}</span>
             </div>
           </div>
         </CardFooter>

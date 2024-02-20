@@ -39,7 +39,7 @@ npm run dev
 ## Contributing
 Ongoing improvements :
 - Error handling
-- City recommendations
+- Search-bar City recommendations
 - Location maps with weather conditions
 
 Contributions are welcome! Feel free to open issues, submit pull requests, or suggest new features.

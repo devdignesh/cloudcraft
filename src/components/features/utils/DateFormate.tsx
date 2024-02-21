@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const DateFormate: React.FC = () => {
-  const { data } = useSelector((state: RootState) => state.weather);
+  const { dt, timezone } = useSelector((state: RootState) => state.weather.data);
 
   const [date, setDate] = useState<string | null>(null);
 
   useEffect(() => {
+    
     function calculateLocalDate(
       utcTimestamp: number,
       timezoneOffsetSeconds: number
@@ -22,8 +23,8 @@ const DateFormate: React.FC = () => {
       });
     }
 
-    setDate(calculateLocalDate(data.dt, data.timezone));
-  }, [data.dt, data.timezone]);
+    setDate(calculateLocalDate(dt, timezone));
+  }, [dt, timezone]);
 
   return (
     <>

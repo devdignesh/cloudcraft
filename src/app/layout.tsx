@@ -5,7 +5,8 @@ import StoreProvider from "@/redux/provider/reduxProvider";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import "dotenv/config";
 import { env } from "../../env.mjs";
-import Script from 'next/script';
+import Script from "next/script";
+import Navbar from "@/components/features/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -23,19 +24,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <StoreProvider>
-        <body className={inter.className}>
+        <body className={`${inter.className}, `}>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
-            <head>
-              <Script src={MapScriptUrl} strategy="beforeInteractive"></Script>
-              {/* <Script src={MapScriptUrl} defer async strategy="beforeInteractive"></Script> */}
-            </head>
-
+          
             {children}
+            <Script src={MapScriptUrl} strategy="beforeInteractive"></Script>
+            {/* <Script src={MapScriptUrl} defer async strategy="beforeInteractive"></Script> */}
           </ThemeProvider>
         </body>
       </StoreProvider>

@@ -7,7 +7,7 @@ import { ModeToggle } from "@/components/ui/ModeToggle";
 import { IoSearch } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { fetchWeather } from "@/app/api/fetchWeatherData";
-import { setError, setLoading, setWeather } from "@/redux/slice/weatherSlice";
+import { setError, setWeather } from "@/redux/slice/weatherSlice";
 
 const Navbar: React.FC = () => {
   const [query, setQuery] = useState<string>("");
@@ -16,27 +16,22 @@ const Navbar: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      dispatch(setLoading(true));
       const weatherData = await fetchWeather(query.toLowerCase());
       dispatch(
         setWeather({ data: weatherData, searchQuery: query.toLowerCase() })
       );
-    } catch (error) {
-      if (error instanceof Error) {
-        dispatch(setError(error.message));
-      } else {
-        dispatch(setError("An unknown error occurred."));
-      }
+    } catch (error:any) {
+      dispatch(setError(`Failed to fetch weather data: ${error.message}`));
     } finally {
-      dispatch(setLoading(false));
+      setQuery("");
     }
-
-    setQuery("");
   };
 
   return (
     <div className="flex justify-end sm:justify-between">
-      <span className="foreground text-xl font-bold hidden sm:block">CloudCraft</span>
+      <span className="foreground text-xl font-bold hidden sm:block">
+        CloudCraft
+      </span>
       <div className="flex gap-2">
         <form onSubmit={handleSubmit}>
           <div className="flex gap-2">

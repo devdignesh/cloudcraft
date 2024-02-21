@@ -6,7 +6,7 @@ interface WeatherState {
   data: WeatherItems;
   loading: boolean;
   error: string | null;
-  searchQuery:string
+  searchQuery: string;
 }
 
 interface SetWeatherPayload {
@@ -18,7 +18,7 @@ const initialState: WeatherState = {
   data: defaultWeatherValues,
   loading: false,
   error: null,
-  searchQuery:"delhi"
+  searchQuery: "delhi",
 };
 
 const weatherSlice = createSlice({
@@ -26,20 +26,16 @@ const weatherSlice = createSlice({
   initialState,
   reducers: {
     setWeather: (state, action: PayloadAction<SetWeatherPayload>) => {
-      state.data = {...state.data,...action.payload.data};
-      state.loading = false;
+      state.data = { ...state.data, ...action.payload.data };
       state.error = null;
-      state.searchQuery = action.payload.searchQuery || "delhi"
+      state.searchQuery = action.payload.searchQuery || "delhi";
     },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
+
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
-      state.loading = false;
     },
   },
 });
 
-export const { setWeather, setLoading, setError } = weatherSlice.actions;
+export const { setWeather, setError } = weatherSlice.actions;
 export default weatherSlice.reducer;

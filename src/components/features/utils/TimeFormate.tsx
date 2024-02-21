@@ -1,39 +1,32 @@
-import { RootState } from "@/redux/store";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
-const TimeFormate: React.FC = () => {
-  const initial = new Date();
-  const { data } = useSelector((state: RootState) => state.weather);
-  const [time, setTime] = useState<Date | null>(null);
+const TimeFormat: React.FC = () => {
+  const { timezone } = useSelector((state: RootState) => state.weather.data);
+  const [formattedTime, setFormattedTime] = useState<string | null>(null);
 
-  
   useEffect(() => {
-    const calculateLocalTime = (initialTime: Date, offsetSeconds: number): Date =>
-      new Date(initialTime.getTime() + offsetSeconds * 1000);
+    const calculateLocalTime = (offsetSeconds: number): string => {
+      const utcTime = new Date();
+      const localTime = new Date(utcTime.getTime() + offsetSeconds * 1000);
 
-    const updateLocalTime = () => setTime(calculateLocalTime(new Date(), data.timezone));
+      return localTime.toLocaleTimeString("en-US", {
+        hour12: true,
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+    };
 
-    // Set the initial time to null when the component mounts
-    setTime(new Date(0));
+    const timer = setInterval(() => {
+      setFormattedTime(calculateLocalTime(timezone));
+    }, 1000);
 
-    // Update time every second
-    const timer = setInterval(updateLocalTime, 1000);
-
-    // Clean up timer on component unmount
     return () => clearInterval(timer);
-  }, [data.timezone]);
-
-
-  const formattedTime = time?.toLocaleTimeString("en-US", {
-    timeZone: "UTC",
-    hour12: true,
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+  }, [timezone]);
 
   return <p className="font-semibold">{formattedTime}</p>;
 };
 
-export default TimeFormate;
+export default TimeFormat;

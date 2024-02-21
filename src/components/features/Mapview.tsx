@@ -6,8 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const Mapview: React.FC = () => {
   const { data } = useSelector((state: RootState) => state.weather);
-  var map;
-
+ 
   useEffect(() => {
     const loadMap = async () => {
       if (window.mappls && window.mappls.Map) {

@@ -14,7 +14,7 @@ import DateFormate from "./utils/DateFormate";
 import { FaTemperatureThreeQuarters } from "react-icons/fa6";
 import classNames from "classnames";
 import { cn } from "@/lib/utils";
-import Image from "next/image"
+import Image from "next/image";
 
 const Temperature = () => {
   const { data } = useSelector((state: RootState) => state.weather);
@@ -49,11 +49,18 @@ const Temperature = () => {
             <TimeFormate />
           </div>
           <div className="flex flex-col items-end space-y-1">
-            <div>
-              <div className="relative invert-0 dark:invert h-8 w-8 image-icon">
-                <Image fill src={`/icons/${weather[0].icon}.svg`} alt={weather[0].icon} />
+            <div className="flex flex-col items-end">
+              <div className=" relative invert-0 dark:invert  image-icon">
+                <Image
+                  width={8}
+                  height={8}
+                  className="h-6 w-6 flx items-end sm:h-8 sm:w-8"
+                  src={`/icons/${weather[0].icon}.svg`}
+                  alt={weather[0].icon}
+                />
               </div>
-              <span className=" font-semibold">{weather[0].main}</span>
+              <span className=" font-semibold">{weather[0].description[0].toUpperCase() + weather[0].description.slice(1)}</span>
+              
             </div>
             <div className="hidden sm:block space-x-3 text-sm dark:text-neutral-500">
               <span>High: {maxTemperature}°C</span>

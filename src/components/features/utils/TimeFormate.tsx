@@ -1,32 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-const TimeFormat: React.FC = () => {
-  const { timezone } = useSelector((state: RootState) => state.weather.data);
-  const [formattedTime, setFormattedTime] = useState<string | null>(null);
+const TimeFormate: React.FC = () => {
+  const initial = new Date();
+  const { data } = useSelector((state: RootState) => state.weather);
+  const [time, setTime] = useState<Date | null>(null);
 
   useEffect(() => {
-    const calculateLocalTime = (offsetSeconds: number): string => {
-      const utcTime = new Date();
-      const localTime = new Date(utcTime.getTime() + offsetSeconds * 1000);
+    const calculateLocalTime = (
+      initialTime: Date,
+      offsetSeconds: number
+    ): Date => new Date(initialTime.getTime() + offsetSeconds * 1000);
 
-      return localTime.toLocaleTimeString("en-US", {
-        hour12: true,
-        hour: "numeric",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-    };
-
-    const timer = setInterval(() => {
-      setFormattedTime(calculateLocalTime(timezone));
-    }, 1000);
-
+    const updateLocalTime = () =>
+      setTime(calculateLocalTime(new Date(), data.timezone));
+    setTime(new Date(0));
+    const timer = setInterval(updateLocalTime, 1000);
     return () => clearInterval(timer);
-  }, [timezone]);
+  }, [data.timezone]);
 
+  const formattedTime = time?.toLocaleTimeString("en-US", {
+    timeZone: "UTC",
+    hour12: true,
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+  });
   return <p className="font-semibold">{formattedTime}</p>;
 };
 
-export default TimeFormat;
+export default TimeFormate;

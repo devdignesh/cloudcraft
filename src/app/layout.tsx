@@ -6,7 +6,6 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import "dotenv/config";
 import { env } from "../../env.mjs";
 import Script from "next/script";
-import Navbar from "@/components/features/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {

@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
             <Input
               type="text"
               placeholder="Search city"
-              className="max-w-60"
+              className="max-w-60 placeholder:text-sm"
               value={query}
               onChange={(e) => setQuery(e.target.value.toLowerCase())}
             />
